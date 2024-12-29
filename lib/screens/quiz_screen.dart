@@ -23,6 +23,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int currentQuestionIndex = 0;
   int score = 0;
   bool isAnswered = false;
+  String? selectedAnswer; // Store the selected answer
 
   @override
   void initState() {
@@ -75,10 +76,22 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
               ...currentQuestion.options.map((option) {
                 return ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      selectedAnswer == option
+                          ? (option == currentQuestion.correctAnswer
+                              ? Colors.green
+                              : Colors.red)
+                          : Colors.blue,
+                    ),
+                  ),
                   onPressed: isAnswered
                       ? null
                       : () {
-                          checkAnswer(option, currentQuestion.correctAnswer);
+                          setState(() {
+                            selectedAnswer = option; // Store the selected answer
+                          });
+                          checkAnswer(option, currentQuestion.correctAnswer); // Check the answer
                         },
                   child: Text(option),
                 );
@@ -89,9 +102,10 @@ class _QuizScreenState extends State<QuizScreen> {
                     setState(() {
                       if (currentQuestionIndex < snapshot.data!.length - 1) {
                         currentQuestionIndex++;
-                        isAnswered = false;
+                        selectedAnswer = null; // Reset selected answer for the next question
+                        isAnswered = false; // Enable answering for the next question
                       } else {
-                        // Afficher les résultats
+                        // If it's the last question, go to results screen
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
-import 'quiz_settings_screen.dart'; // Import de l'écran de paramétrage du quiz
+import 'package:quiz_application/screens/quiz_settings_screen.dart'; // Import for QuizSettingsScreen
+import 'package:quiz_application/screens/about_screen.dart'; // Import for AboutScreen
+import 'package:quiz_application/screens/base_screen.dart'; 
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz Application'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Navigation vers l'écran des paramètres du quiz
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuizSettingsScreen()),
-                );
-              },
-              child: Text('Commencer un quiz'),
-            ),
-          ],
+    return BaseScreen(
+      child: Center(
+        child: Text(
+          'Bienvenue dans l\'application !',
+          style: TextStyle(fontSize: 24),
         ),
       ),
     );
